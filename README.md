@@ -18,7 +18,7 @@ import { Context, Stroke, hsl } from "scratch";
 
 #### JavaScript
 
-Copy [scratch.js](/kendfrey/scratch/blob/dist/dist/scratch.js) and [require.js](/kendfrey/scratch/blob/dist/dist/require.js) to your project and use the following import:
+Copy [scratch.js](../../blob/dist/dist/scratch.js) and [require.js](../../blob/dist/dist/require.js) to your project and use the following import:
 
 ```js
 require(["scratch"], ({ Context, Stroke, hsl }) =>

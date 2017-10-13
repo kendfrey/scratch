@@ -18,7 +18,7 @@ import { Context, Stroke, hsl } from "scratch";
 
 #### JavaScript
 
-Copy [scratch.js](/blob/dist/dist/scratch.js) and [require.js](/blob/dist/dist/require.js) to your project and use the following import:
+Copy [scratch.js](/kendfrey/scratch/blob/dist/dist/scratch.js) and [require.js](/kendfrey/scratch/blob/dist/dist/require.js) to your project and use the following import:
 
 ```js
 require(["scratch"], ({ Context, Stroke, hsl }) =>
@@ -36,7 +36,7 @@ Include the scripts in your HTML like this:
 
 ### Documentation
 
-See [demo.html](/blob/dist/demo.html) for a list of examples.
+See [demo.html](https://cdn.rawgit.com/kendfrey/scratch/dist/demo.html) for a list of examples.
 
 There is currently no API documentation page. The [source code](src/scratch.ts) has JSDoc comments to document every function.
 

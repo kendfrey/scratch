@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+}
+body > div
+{
+	margin: 20px;
+}
+select
+{
+	width: 200px;
+}
+pre
+{
+	border: 1px solid #9f9f9f;
+	margin: 0;
+	padding: 5px;
+	tab-size: 4;
+	width: 600px;
+	height: 200px;
+	overflow: scroll;
+}
+canvas
+{
+	border: 1px solid #9f9f9f;
+}
+</style>
+</head>
+<body>
+<div>
+Example:
+<div>
+<select>
+<optgroup label="Stroke">
+<option value="line">
+line
+<template><script>
+context.add(new Stroke()
+	.line({ x: 50, y: 50 }, { x: 150, y: 50 })
+);
+context.add(new Stroke()
+	.line({ x: 50, y: 50, r: 0, g: 1, b: 0 }, { x: 150, y: 150, r: 1, g: 0, b: 1 })
+);
+context.add(new Stroke()
+	.line({ x: 50, y: 50, w: 1 }, { x: 50, y: 150, w: 5 })
+);
+</script></template>
+</option>
+<option value="fix">
+fix
+<template><script>
+context.add(new Stroke()
+	.line({ x: 50, y: 50 }, { x: 150, y: 50 })
+	.fix({ r: 1, g: 0, b: 0, w: 3 })
+);
+</script></template>
+</option>
+<option value="circle">
+circle
+<template><script>
+context.add(new Stroke()
+	.circle(100, 100, 50)
+);
+context.add(new Stroke()
+	.circle(100, 100, 25, Math.PI / 2, true)
+	.line({ r: 0 }, { r: 1 })
+);
+</script></template>
+</option>
+<option value="ellipse">
+ellipse
+<template><script>
+context.add(new Stroke()
+	.ellipse(100, 50, 50, 25)
+);
+context.add(new Stroke()
+	.ellipse(50, 150, 20, 40, 0, false, "tangent")
+	.cut(0, 7/8)
+);
+context.add(new Stroke()
+	.ellipse(150, 150, 20, 40, 0, false, "polar")
+	.cut(0, 7/8)
+);
+</script></template>
+</option>
+<option value="bezier">
+bezier
+<template><script>
+context.add(new Stroke()
+	.bezier({ x: 10, y: 10, w: 0 }, { x: 100, y: 10, w: 5 }, { x: 10, y: 50, w: 0 })
+);
+context.add(new Stroke()
+	.bezier({ x: 50, y: 50, r: 0 }, { x: 150, y: 50, r: 0 }, { x: 50, y: 150, r: 1 }, { x: 150, y: 150, r: 1 })
+);
+context.add(new Stroke()
+	.bezier({ x: 10, y: 150 }, { x: 10, y: 250 }, { x: 100, y: 50 }, { x: 190, y: 250 }, { x: 190, y: 150 })
+);
+</script></template>
+</option>
+<option value="parametric">
+parametric
+<template><script>
+context.add(new Stroke()
+	.line({ x: 50 }, { x: 150 })
+	.parametric(t => ({ y: 50 + 10 * Math.sin(t * 8 * Math.PI) }))
+);
+context.add(new Stroke()
+	.circle(100, 125, 50)
+	.fix({ w: 5 })
+	.parametric(t => hsl(t, 1, 0.4))
+);
+</script></template>
+<option value="cut">
+cut
+<template><script>
+context.add(new Stroke()
+	.circle(100, 100, 50)
+	.cut(0, 0.5)
+);
+</script></template>
+</option>
+</option>
+<option value="transform">
+transform
+<template><script>
+context.add(new Stroke()
+	.line({ x: 50 }, { x: 150 })
+	.transform(({x}) => ({ y: 50 + 10 * Math.sin(x * 0.05 * Math.PI) }))
+);
+context.add(new Stroke()
+	.circle(100, 125, 50)
+	.fix({ w: 5 })
+	.transform(({y}) => ({ r: y * 0.01 - 1 }))
+);
+</script></template>
+</option>
+<option value="slide">
+slide
+<template><script>
+context.add(new Stroke()
+	.line({ x: 50, y: 50, w: 3 }, { x: 150, y: 50, w: 3 })
+	.slide(t => t ** 2)
+	.parametric(t => hsl(t, 1, 0.4))
+);
+</script></template>
+</option>
+<option value="translate">
+translate
+<template><script>
+context.add(new Stroke()
+	.circle(100, 100, 50)
+);
+context.add(new Stroke()
+	.circle(100, 100, 50)
+	.fix({ r: 1 })
+	.translate(20, 10)
+);
+</script></template>
+</option>
+<option value="rotate">
+rotate
+<template><script>
+context.add(new Stroke()
+	.line({ x: 50, y: 100 }, { x: 150, y: 100 })
+);
+context.add(new Stroke()
+	.line({ x: 50, y: 100 }, { x: 150, y: 100 })
+	.fix({ r: 1 })
+	.rotate(0.1 * Math.PI, 100, 100)
+);
+</script></template>
+</option>
+<option value="scale">
+scale
+<template><script>
+context.add(new Stroke()
+	.circle(100, 100, 50)
+);
+context.add(new Stroke()
+	.circle(100, 100, 50)
+	.fix({ r: 1 })
+	.scale(0.75, 1.5, 100, 100)
+);
+</script></template>
+</option>
+<option value="matrix">
+matrix
+<template><script>
+context.add(new Stroke()
+	.circle(100, 100, 50)
+);
+context.add(new Stroke()
+	.circle(100, 100, 50)
+	.fix({ r: 1 })
+	.matrix(1, -1, 0, 1, 0, 100)
+);
+</script></template>
+</option>
+<option value="sequence">
+sequence
+<template><script>
+context.add(Stroke.sequence
+	([
+		new Stroke().line({ x: 50, y: 50 }, { x: 150, y: 50 }),
+		new Stroke().line({ x: 150, y: 50 }, { x: 150, y: 150 })
+	])
+	.line({ r: 0 }, { r: 1 })
+);
+</script></template>
+</option>
+</optgroup>
+<optgroup label="Context">
+<option value="add">
+add
+<template><script>
+context.add(new Stroke().line({ x: 50, y: 50 }, { x: 150, y: 150 }));
+</script></template>
+</option>
+<option value="clear">
+clear
+<template><script>
+context.add(new Stroke().line({ x: 50, y: 50 }, { x: 150, y: 150 }));
+context.clear();
+</script></template>
+</option>
+<option value="draw">
+draw
+<template><script>
+context.add(new Stroke().line({ x: 50, y: 50 }, { x: 150, y: 150 }));
+
+const canvas2 = document.querySelector("canvas");
+const ctx2 = canvas2.getContext("2d");
+context.draw(ctx2);
+context.clear();
+</script></template>
+</option>
+<option value="default">
+default
+<template><script>
+context.add(new Stroke().line({ x: 50, y: 50, w: 5 }, { x: 150, y: 50, w: 0 }));
+context.add(new Stroke().line({ x: 50, y: 150 }, { x: 150, y: 150 }));
+context.default.w = 3;
+context.default.b = 1;
+</script></template>
+</option>
+<option value="segmentation">
+segmentation
+<template><script>
+context.add(new Stroke().bezier({ x: 50, y: 100 }, { x: 50, y: -50 }, { x: -50, y: 50 }, { x: 100, y: 50 }));
+context.add(new Stroke().circle(125, 125, 50));
+context.segmentation = 8;
+</script></template>
+</option>
+</optgroup>
+</select>
+</div>
+</div>
+<div>
+Code:
+<pre></pre>
+</div>
+<div>
+Result:
+<div><canvas width="200" height="200"></canvas></div>
+</div>
+<script src="dist/require.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>

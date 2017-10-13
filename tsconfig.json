@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"outDir": "./dist",
+		"allowJs": true,
+		"sourceMap": true,
+		"target": "es2017",
+		"strict": true,
+		"module": "umd"
+	},
+	"include": [
+		"./src/**/*"
+	]
+}
